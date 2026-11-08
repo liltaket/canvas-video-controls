@@ -1,8 +1,8 @@
 # KTH Video Controls
 
-A tiny Chrome extension that fixes the video player used for lectures on KTH Canvas (Kaltura): **Space pauses**, **keyboard shortcuts control playback speed**, and the time label shows **how much time is really left at your current speed**.
+A tiny Chrome extension that fixes the Kaltura video player embedded in Canvas, built for lectures at KTH but not KTH-specific: **Space pauses**, **keyboard shortcuts control playback speed**, and the time label shows **how much time is really left at your current speed**.
 
-> *Svenska:* Chrome-tillägg för föreläsningsvideor på KTH/Canvas. Mellanslag pausar, kortkommandon styr hastigheten och tidsvisningen visar verklig återstående tid.
+> *Svenska:* Chrome-tillägg för Kaltura-spelaren i Canvas (byggt för KTH). Mellanslag pausar, kortkommandon styr hastigheten och tidsvisningen visar verklig återstående tid.
 
 ## What it does
 
@@ -34,13 +34,15 @@ Don't move or delete the folder afterwards, Chrome loads the files from there.
 | `m` | Mute |
 | `t` | Toggle an extra time box in the top-right of the video (off by default) |
 
-## Permissions
+## Permissions and other universities
 
-The extension only runs on `*.kth.se` and `*.kaltura.com` (including iframes embedded there) and uses `storage` to remember your last speed. Nothing is sent anywhere. To support other sites, add them to `matches` in `manifest.json` and reload the extension.
+The extension only runs on `*.kth.se`, `*.kaltura.com` and `*.instructure.com` (including iframes embedded there) and uses `storage` to remember your last speed. Nothing is sent anywhere.
+
+It was tested on KTH only. If your university uses Kaltura in Canvas under another domain, add that domain (e.g. `"https://*.youruni.edu/*"`) to `matches` in `manifest.json` and reload the extension. Other players that use a plain HTML `<video>` element may work too.
 
 ## Notes
 
-- Built for the Kaltura player KTH uses in Canvas. Other players may or may not work.
+- Built for the Kaltura player used in Canvas at KTH. Other players may or may not work.
 - Pure content script, no build step, no dependencies. The code is in `content.js`.
 
 ## License
