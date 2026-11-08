@@ -1,4 +1,4 @@
-# KTH Video Controls
+# Canvas Video Controls
 
 A tiny Chrome extension that fixes the Kaltura video player embedded in Canvas, built for lectures at KTH but not KTH-specific: **Space pauses**, **keyboard shortcuts control playback speed**, and the time label shows **how much time is really left at your current speed**.
 

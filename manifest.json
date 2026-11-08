@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "KTH Video Controls",
+  "name": "Canvas Video Controls",
   "version": "1.0.0",
   "description": "Mellanslag för paus, kortkommandon för uppspelningshastighet och verklig återstående tid för videor i Canvas (Kaltura-spelaren).",
   "permissions": ["storage"],

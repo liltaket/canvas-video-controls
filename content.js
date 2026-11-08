@@ -1,4 +1,4 @@
-// KTH Video Controls
+// Canvas Video Controls
 // Körs i alla frames, men aktiverar sig bara på kth.se / kaltura.com eller i
 // iframes som ligger inbäddade på en kth.se-sida (t.ex. spelaren i Canvas).
 (() => {
