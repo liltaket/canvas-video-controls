@@ -331,6 +331,30 @@
       if (roles.every(Boolean) && roles.includes('dur')) tracked.set(n, roles);
     }
   }
+  // Kalturas hastighetsknapp ("1.25x") vet inte om att vi sätter playbackRate
+  // direkt. Skriv rätt värde i den, men bara om exakt en synlig "Nx"-text finns
+  // (flera synliga = menyn är öppen, då rör vi inget).
+  const SPEED_RE = /^\s*\d+(?:\.\d+)?\s*[x×]\s*$/i;
+  function fixSpeedLabel(rate) {
+    if (!document.body) return;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const visible = [];
+    let n;
+    while ((n = walker.nextNode())) {
+      if (n.data.length > 12 || !SPEED_RE.test(n.data) || inOverlay(n)) continue;
+      const el = n.parentElement;
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width === 0 || r.height === 0) continue;
+      const cs = getComputedStyle(el);
+      if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+      visible.push(n);
+    }
+    if (visible.length !== 1) return;
+    const want = fmtRate(rate);
+    if (visible[0].data.trim() !== want) visible[0].data = visible[0].data.replace(/\d+(?:\.\d+)?\s*[x×]/i, want);
+  }
+
   let applying = false;
   function applyNative() {
     const v = pickVideo();
@@ -340,6 +364,7 @@
     const total = fmt(v.duration) + ' · ' + fmt(remaining) + ' kvar';
     discover(v);
     applying = true;
+    fixSpeedLabel(rate);
     for (const [node, roles] of tracked) {
       if (!node.isConnected) { tracked.delete(node); continue; }
       const found = node.data.match(TIME_RE);
@@ -371,6 +396,12 @@
     if (seen.has(v)) return;
     seen.add(v);
     let applied = false;
+    v.addEventListener('ratechange', () => {
+      if (applied && v.playbackRate > 0 && prefs.rate !== v.playbackRate) {
+        prefs.rate = v.playbackRate;
+        savePrefs();
+      }
+    });
     const refresh = () => { updateHud(); applyNative(); };
     ['timeupdate', 'ratechange', 'durationchange', 'play', 'pause', 'seeked', 'loadedmetadata']
       .forEach((ev) => v.addEventListener(ev, refresh));
