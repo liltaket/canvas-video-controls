@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "KTH Video Controls",
+  "version": "1.0.0",
+  "description": "Mellanslag för paus, kortkommandon för uppspelningshastighet och verklig återstående tid för videor på KTH/Canvas.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.kth.se/*", "https://*.kaltura.com/*"],
+      "js": ["content.js"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "run_at": "document_start"
+    }
+  ]
+}
